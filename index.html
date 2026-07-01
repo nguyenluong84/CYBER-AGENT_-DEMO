@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CYBER AGENTS - Hệ Thống Huấn Luyện</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cyber: {
+                dark: "#0f172a",
+                panel: "#1e293b",
+                blue: "#3b82f6",
+                neon: "#06b6d4",
+                red: "#ef4444",
+                green: "#10b981",
+              },
+            },
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a;
+        color: #f8fafc;
+      }
+      .cyber-border {
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        box-shadow: 0 0 10px rgba(59, 130, 246, 0.1);
+      }
+      .cyber-glow {
+        box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+      }
+      .tab-content {
+        display: none;
+      }
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.3s ease-in-out;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .nav-item.active {
+        background-color: rgba(59, 130, 246, 0.1);
+        border-right: 3px solid #3b82f6;
+        color: #60a5fa;
+      }
+    </style>
+  </head>
+  <body class="flex h-screen overflow-hidden text-slate-200">
+    <!-- SIDEBAR (Tương tự cấu trúc menu bên trái của image_b9cbbc.png) -->
+    <aside
+      class="w-64 bg-cyber-panel border-r border-slate-700 flex flex-col hidden md:flex"
+    >
+      <div class="p-6 border-b border-slate-700 flex items-center gap-3">
+        <div
+          class="w-10 h-10 rounded bg-blue-600 flex items-center justify-center text-xl font-bold cyber-glow"
+        >
+          CA
+        </div>
+        <div>
+          <h1 class="font-bold text-lg tracking-wider text-blue-400">
+            CYBER AGENTS
+          </h1>
+          <p class="text-xs text-slate-400">Mission Hub</p>
+        </div>
+      </div>
+      <nav class="flex-1 overflow-y-auto py-4">
+        <ul class="space-y-1">
+          <li>
+            <a
+              href="#"
+              onclick="switchTab('dashboard')"
+              id="nav-dashboard"
+              class="nav-item active flex items-center gap-3 px-6 py-3 text-sm font-medium hover:bg-slate-800 hover:text-blue-400 transition-colors"
+            >
+              <i class="fas fa-chart-line w-5"></i> Dashboard (Trang chủ)
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onclick="switchTab('scanner')"
+              id="nav-scanner"
+              class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-medium hover:bg-slate-800 hover:text-blue-400 transition-colors text-slate-400"
+            >
+              <i class="fas fa-qrcode w-5"></i> Quét Thẻ Bài (QR)
+            </a>
+          </li>
+          <li
+            class="pt-4 pb-2 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider"
+          >
+            Nhiệm vụ Cố Vấn (Phụ Huynh)
+          </li>
+          <li>
+            <a
+              href="#"
+              onclick="switchTab('phishing')"
+              id="nav-phishing"
+              class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-medium hover:bg-slate-800 hover:text-red-400 transition-colors text-slate-400"
+            >
+              <i class="fas fa-puzzle-piece w-5"></i> Lắp Ráp Kịch Bản
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              onclick="switchTab('ai-forensics')"
+              id="nav-ai-forensics"
+              class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-medium hover:bg-slate-800 hover:text-red-400 transition-colors text-slate-400"
+            >
+              <i class="fas fa-search w-5"></i> Giám Định Pháp Y AI
+            </a>
+          </li>
+          <li
+            class="pt-4 pb-2 px-6 text-xs font-semibold text-slate-500 uppercase tracking-wider"
+          >
+            Thành tích
+          </li>
+          <li>
+            <a
+              href="#"
+              onclick="switchTab('collection')"
+              id="nav-collection"
+              class="nav-item flex items-center gap-3 px-6 py-3 text-sm font-medium hover:bg-slate-800 hover:text-blue-400 transition-colors text-slate-400"
+            >
+              <i class="fas fa-id-badge w-5"></i> Bộ Sưu Tập Thẻ
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="p-4 border-t border-slate-700 bg-slate-800/50">
+        <div class="flex items-center gap-3">
+          <img
+            src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+            alt="Avatar"
+            class="w-10 h-10 rounded-full bg-slate-700"
+          />
+          <div>
+            <p class="text-sm font-medium">Agent K</p>
+            <p class="text-xs text-slate-400">Cấp độ: Thẻ Vàng</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 flex flex-col bg-cyber-dark overflow-y-auto">
+      <header
+        class="h-16 border-b border-slate-700 flex items-center justify-between px-8 bg-cyber-panel/50 backdrop-blur-sm sticky top-0 z-10"
+      >
+        <h2 class="text-xl font-semibold" id="header-title">Dashboard</h2>
+        <div class="flex items-center gap-4">
+          <button class="text-slate-400 hover:text-white">
+            <i class="fas fa-bell"></i>
+          </button>
+          <button class="text-slate-400 hover:text-white">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="p-8 max-w-6xl mx-auto w-full">
+        <!-- TAB 1: DASHBOARD (Mô phỏng cấu trúc lưới của hình ảnh mẫu) -->
+        <div id="tab-dashboard" class="tab-content active">
+          <!-- Welcome Banner -->
+          <div
+            class="bg-gradient-to-r from-blue-700 to-cyan-600 rounded-xl p-8 mb-8 relative overflow-hidden"
+          >
+            <div
+              class="absolute -right-10 -top-10 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl"
+            ></div>
+            <h3
+              class="text-xs font-bold tracking-widest text-blue-200 mb-2 uppercase"
+            >
+              <i class="fas fa-bolt text-yellow-300 mr-2"></i> Trạng thái hệ
+              thống: Ổn định
+            </h3>
+            <h2 class="text-3xl font-bold text-white mb-4">
+              Chào mừng trở lại, Đặc vụ K.
+            </h2>
+            <p class="text-blue-100 max-w-2xl mb-6">
+              Bạn đang làm rất tốt! Gia đình bạn đã ngăn chặn thành công 3 cuộc
+              tấn công lừa đảo trong tuần này. Hãy tiếp tục nâng cấp khiên chắn
+              số của bạn.
+            </p>
+            <div class="flex items-center gap-4">
+              <span
+                class="bg-blue-900/50 text-blue-100 text-sm px-4 py-2 rounded-full border border-blue-500/30"
+              >
+                <i class="fas fa-fire text-orange-400 mr-2"></i> Streak: 5 ngày
+              </span>
+              <button
+                class="bg-white text-blue-700 font-medium px-6 py-2 rounded-full shadow-lg hover:bg-slate-100 transition"
+                onclick="switchTab('scanner')"
+              >
+                Tiếp tục Nhiệm vụ <i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Stats Grid (Giống các thẻ 0/4 Scenarios, 1/3 Quizzes) -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div
+              class="bg-cyber-panel p-6 rounded-xl border border-slate-700 flex flex-col justify-between"
+            >
+              <i class="fas fa-ticket-alt text-blue-400 text-2xl mb-4"></i>
+              <h4 class="text-2xl font-bold">12/20</h4>
+              <p class="text-sm text-slate-400">Thẻ bài đã thu thập</p>
+            </div>
+            <div
+              class="bg-cyber-panel p-6 rounded-xl border border-slate-700 flex flex-col justify-between"
+            >
+              <i class="fas fa-shield-alt text-emerald-400 text-2xl mb-4"></i>
+              <h4 class="text-2xl font-bold">5</h4>
+              <p class="text-sm text-slate-400">Mã độc đã vô hiệu hóa</p>
+            </div>
+            <div
+              class="bg-cyber-panel p-6 rounded-xl border border-slate-700 flex flex-col justify-between"
+            >
+              <i class="fas fa-user-tie text-red-400 text-2xl mb-4"></i>
+              <h4 class="text-2xl font-bold">2/3</h4>
+              <p class="text-sm text-slate-400">Thử thách Cố Vấn (Phụ huynh)</p>
+            </div>
+            <div
+              class="bg-cyber-panel p-6 rounded-xl border border-slate-700 flex flex-col justify-between"
+            >
+              <i class="fas fa-star text-yellow-400 text-2xl mb-4"></i>
+              <h4 class="text-2xl font-bold">Hạng A</h4>
+              <p class="text-sm text-slate-400">Điểm đánh giá An toàn số</p>
+            </div>
+          </div>
+
+          <!-- Split Section: Continue & Badges -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+              class="md:col-span-2 bg-cyber-panel rounded-xl border border-slate-700 p-6"
+            >
+              <div class="flex justify-between items-center mb-6">
+                <h3 class="font-bold text-lg">Nhiệm vụ đang thực hiện</h3>
+                <a href="#" class="text-blue-400 text-sm hover:underline"
+                  >Xem tất cả</a
+                >
+              </div>
+              <div
+                class="flex gap-4 items-start border-b border-slate-700 pb-6 mb-6"
+              >
+                <div
+                  class="w-16 h-16 rounded bg-slate-800 flex items-center justify-center flex-shrink-0 cyber-border"
+                >
+                  <i class="fas fa-robot text-2xl text-slate-400"></i>
+                </div>
+                <div class="flex-1">
+                  <h4 class="font-bold text-slate-200">
+                    Chiến dịch: Deepfake ngụy trang
+                  </h4>
+                  <p class="text-sm text-slate-400 mt-1 mb-3">
+                    Phát hiện và ngăn chặn video giả mạo người thân gọi điện
+                    mượn tiền.
+                  </p>
+                  <div class="w-full bg-slate-800 rounded-full h-2">
+                    <div
+                      class="bg-blue-500 h-2 rounded-full"
+                      style="width: 70%"
+                    ></div>
+                  </div>
+                  <div class="flex justify-between mt-2 text-xs text-slate-500">
+                    <span>Tiến độ</span>
+                    <span>70%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bg-cyber-panel rounded-xl border border-slate-700 p-6">
+              <div class="flex justify-between items-center mb-6">
+                <h3 class="font-bold text-lg">Huy hiệu mới nhất</h3>
+              </div>
+              <div
+                class="flex items-center gap-4 bg-slate-800/50 p-3 rounded-lg border border-slate-700/50"
+              >
+                <i class="fas fa-eye text-emerald-400 text-2xl"></i>
+                <div>
+                  <h4 class="text-sm font-bold">Mắt Diều Hâu</h4>
+                  <p class="text-xs text-slate-400">Soi thành công 3 lỗi AI</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: QUÉT THẺ QR -->
+        <div id="tab-scanner" class="tab-content">
+          <div class="max-w-2xl mx-auto text-center mt-10">
+            <i class="fas fa-qrcode text-6xl text-blue-500 mb-6"></i>
+            <h2 class="text-3xl font-bold mb-4">Kết nối Thẻ Bài Vật Lý</h2>
+            <p class="text-slate-400 mb-8">
+              Sử dụng camera để quét mã QR trên Thẻ Bài Cyber Agents hoặc Poster
+              để triệu hồi nhiệm vụ mới.
+            </p>
+
+            <div
+              class="aspect-video bg-black rounded-xl border-2 border-dashed border-slate-600 flex flex-col items-center justify-center mb-8 relative"
+            >
+              <!-- Giả lập vạch quét -->
+              <div
+                class="absolute w-full h-1 bg-blue-500 opacity-50 shadow-[0_0_15px_#3b82f6] animate-pulse"
+                style="top: 50%"
+              ></div>
+              <i class="fas fa-camera text-slate-600 text-4xl mb-2"></i>
+              <span class="text-slate-500 text-sm"
+                >Camera đang chờ cấp quyền...</span
+              >
+            </div>
+
+            <div class="grid grid-cols-3 gap-4">
+              <button
+                class="bg-slate-800 p-4 rounded-lg border border-green-500/30 hover:bg-slate-700 text-green-400"
+                onclick="switchTab('phishing')"
+              >
+                <i class="fas fa-play mb-2"></i><br />
+                Demo: Thẻ Xanh
+              </button>
+              <button
+                class="bg-slate-800 p-4 rounded-lg border border-yellow-500/30 hover:bg-slate-700 text-yellow-400"
+                onclick="switchTab('phishing')"
+              >
+                <i class="fas fa-play mb-2"></i><br />
+                Demo: Thẻ Vàng
+              </button>
+              <button
+                class="bg-slate-800 p-4 rounded-lg border border-red-500/30 hover:bg-slate-700 text-red-400"
+                onclick="switchTab('ai-forensics')"
+              >
+                <i class="fas fa-play mb-2"></i><br />
+                Demo: Thẻ Đỏ
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 3: TRÙM CUỐI - LẮP RÁP KỊCH BẢN (Pass-the-phone) -->
+        <div id="tab-phishing" class="tab-content">
+          <!-- Cảnh báo chuyển máy -->
+          <div
+            class="bg-red-900/40 border border-red-500/50 rounded-lg p-4 flex items-center justify-between mb-8 cyber-border"
+            style="box-shadow: 0 0 15px rgba(239, 68, 68, 0.2)"
+          >
+            <div class="flex items-center gap-4">
+              <i
+                class="fas fa-exclamation-triangle text-red-500 text-3xl animate-pulse"
+              ></i>
+              <div>
+                <h3
+                  class="text-red-400 font-bold uppercase tracking-wider text-sm"
+                >
+                  Cảnh báo Cấp độ 5: Tấn công Social Engineering
+                </h3>
+                <p class="text-slate-200">
+                  Đặc vụ nhí hãy **CHUYỂN THIẾT BỊ CHO BỐ/MẸ** để giải mã thủ
+                  đoạn lừa đảo này!
+                </p>
+              </div>
+            </div>
+            <div class="hidden md:block text-slate-500 text-sm">
+              <i class="fas fa-exchange-alt mr-2"></i> Chế độ Co-op
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Khu vực làm việc -->
+            <div class="bg-cyber-panel rounded-xl border border-slate-700 p-6">
+              <h3 class="text-lg font-bold mb-2">Bàn Làm Việc Cố Vấn</h3>
+              <p class="text-sm text-slate-400 mb-6">
+                Mục tiêu: Kéo thả các cụm từ chuyên môn để tái tạo lại kịch bản
+                tin nhắn SMS lừa đảo đánh cắp tài khoản ngân hàng phổ biến nhất
+                hiện nay.
+              </p>
+
+              <!-- Box thả từ (Dropzone) -->
+              <div
+                class="bg-slate-900 border-2 border-dashed border-slate-600 rounded-lg p-6 min-h-[150px] mb-6 flex flex-wrap gap-2 items-start content-start"
+              >
+                <span class="text-slate-600 text-sm w-full text-center mt-8"
+                  >Kéo thả các khối từ vựng vào đây để tạo thành câu hoàn
+                  chỉnh...</span
+                >
+                <!-- Giả lập từ đã kéo vào -->
+                <!-- <div class="bg-red-900/50 border border-red-500/50 text-red-200 px-3 py-1.5 rounded cursor-pointer">Cơ quan thuế</div> -->
+              </div>
+
+              <!-- Khối từ vựng (Draggable items) -->
+              <h4 class="text-xs font-semibold text-slate-500 uppercase mb-3">
+                Kho dữ liệu tình báo
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <div
+                  class="bg-slate-800 border border-slate-600 px-3 py-2 rounded text-sm cursor-grab hover:border-blue-500 hover:text-blue-400 transition"
+                >
+                  <i class="fas fa-grip-vertical mr-2 text-slate-500"></i>Quyết
+                  định cưỡng chế
+                </div>
+                <div
+                  class="bg-slate-800 border border-slate-600 px-3 py-2 rounded text-sm cursor-grab hover:border-blue-500 hover:text-blue-400 transition"
+                >
+                  <i class="fas fa-grip-vertical mr-2 text-slate-500"></i>Cơ
+                  quan thuế
+                </div>
+                <div
+                  class="bg-slate-800 border border-slate-600 px-3 py-2 rounded text-sm cursor-grab hover:border-blue-500 hover:text-blue-400 transition"
+                >
+                  <i class="fas fa-grip-vertical mr-2 text-slate-500"></i>Khóa
+                  tài khoản ngân hàng
+                </div>
+                <div
+                  class="bg-slate-800 border border-slate-600 px-3 py-2 rounded text-sm cursor-grab hover:border-blue-500 hover:text-blue-400 transition"
+                >
+                  <i class="fas fa-grip-vertical mr-2 text-slate-500"></i>Tải
+                  ứng dụng qua file .apk
+                </div>
+                <div
+                  class="bg-slate-800 border border-slate-600 px-3 py-2 rounded text-sm cursor-grab hover:border-blue-500 hover:text-blue-400 transition"
+                >
+                  <i class="fas fa-grip-vertical mr-2 text-slate-500"></i>Bấm
+                  vào link bit.ly/...
+                </div>
+                <div
+                  class="bg-slate-800 border border-slate-600 px-3 py-2 rounded text-sm cursor-grab hover:border-blue-500 hover:text-blue-400 transition"
+                >
+                  <i class="fas fa-grip-vertical mr-2 text-slate-500"></i>Trúng
+                  thưởng SH
+                </div>
+              </div>
+
+              <button
+                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded mt-8 shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+              >
+                <i class="fas fa-unlock-alt mr-2"></i> Xác nhận & Giải cứu
+              </button>
+            </div>
+
+            <!-- Khu vực Hướng dẫn / Context -->
+            <div
+              class="bg-cyber-panel rounded-xl border border-slate-700 p-6 flex flex-col"
+            >
+              <div class="flex-1">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                  <i class="fas fa-info-circle text-blue-400"></i> Hồ sơ Vụ án
+                </h3>
+                <div
+                  class="bg-slate-800 p-4 rounded-lg mb-4 text-sm text-slate-300 leading-relaxed"
+                >
+                  <p class="mb-2">
+                    <strong>Nạn nhân:</strong> Bà Nguyễn Thị M. (55 tuổi).
+                  </p>
+                  <p class="mb-2">
+                    <strong>Thiệt hại:</strong> Mất quyền kiểm soát điện thoại,
+                    bị rút sạch 50 triệu trong tài khoản.
+                  </p>
+                  <p>
+                    <strong>Thủ đoạn (Nghi vấn):</strong> Hacker giả danh cơ
+                    quan chức năng, sử dụng từ ngữ pháp lý để gây áp lực, ép nạn
+                    nhân cài mã độc theo đường dẫn lạ ngoài CH Play / App Store.
+                  </p>
+                </div>
+                <div
+                  class="bg-blue-900/20 border border-blue-500/30 p-4 rounded-lg"
+                >
+                  <h4 class="text-blue-400 font-bold text-sm mb-2">
+                    <i class="fas fa-lightbulb mr-1"></i> Góc Cố Vấn (Dành cho
+                    Phụ Huynh)
+                  </h4>
+                  <p class="text-sm text-slate-300 text-justify">
+                    Thử thách này cần kiến thức xã hội. Hãy cho con bạn biết: Cơ
+                    quan Nhà nước KHÔNG BAO GIỜ làm việc qua tin nhắn, điện
+                    thoại yêu cầu tải app lạ hoặc chuyển tiền.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 4: TRÙM CUỐI - GIÁM ĐỊNH PHÁP Y AI -->
+        <div id="tab-ai-forensics" class="tab-content">
+          <div
+            class="bg-red-900/40 border border-red-500/50 rounded-lg p-4 flex items-center justify-between mb-8 cyber-border"
+            style="box-shadow: 0 0 15px rgba(239, 68, 68, 0.2)"
+          >
+            <div class="flex items-center gap-4">
+              <i
+                class="fas fa-fingerprint text-red-500 text-3xl animate-pulse"
+              ></i>
+              <div>
+                <h3
+                  class="text-red-400 font-bold uppercase tracking-wider text-sm"
+                >
+                  Cảnh báo Cấp độ Tối đa: Tin giả mạo Deepfake/AI
+                </h3>
+                <p class="text-slate-200">
+                  Đặc vụ nhí hãy **CHUYỂN THIẾT BỊ CHO BỐ/MẸ** để tiến hành giám
+                  định hình ảnh!
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Ảnh cần giám định (Chiếm 2 cột) -->
+            <div
+              class="lg:col-span-2 bg-cyber-panel rounded-xl border border-slate-700 p-6"
+            >
+              <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-bold">Bằng chứng kỹ thuật số #0492</h3>
+                <span
+                  class="bg-slate-800 text-xs px-2 py-1 rounded text-slate-400 border border-slate-600"
+                  ><i class="fas fa-expand mr-1"></i> Chạm để soi kính lúp</span
+                >
+              </div>
+
+              <div
+                class="relative rounded-lg overflow-hidden border border-slate-600 bg-black aspect-video flex items-center justify-center cursor-crosshair"
+              >
+                <!-- Giả lập ảnh bị Fake bởi AI (Dùng placeholder gradient) -->
+                <div
+                  class="w-full h-full bg-gradient-to-br from-slate-700 to-slate-900 relative"
+                >
+                  <div
+                    class="absolute inset-0 flex items-center justify-center text-slate-500 flex-col opacity-50"
+                  >
+                    <i class="fas fa-image text-5xl mb-4"></i>
+                    <p>
+                      [ Hình ảnh giả mạo: Người nổi tiếng quảng cáo thuốc thần
+                      kỳ ]
+                    </p>
+                  </div>
+                  <!-- Các điểm bất thường (Hotspots giả lập) -->
+                  <div
+                    class="absolute top-1/4 left-1/3 w-8 h-8 border-2 border-red-500 rounded-full animate-ping opacity-0 hover:opacity-100 transition-opacity"
+                    title="Bàn tay có 6 ngón"
+                  ></div>
+                  <div
+                    class="absolute bottom-1/4 right-1/4 w-8 h-8 border-2 border-red-500 rounded-full animate-ping opacity-0 hover:opacity-100 transition-opacity"
+                    title="Chữ trên bảng tên bị méo mó (AI Text Artifacts)"
+                  ></div>
+                </div>
+
+                <!-- Lớp kính lúp giả định (Chỉ hiển thị UI) -->
+                <div
+                  class="absolute bottom-4 left-4 right-4 flex justify-center gap-4"
+                >
+                  <button
+                    class="bg-slate-900/80 backdrop-blur border border-blue-500 text-blue-400 px-4 py-2 rounded-full text-sm font-bold shadow-lg hover:bg-blue-900/50"
+                  >
+                    <i class="fas fa-search-plus mr-1"></i> Kính Lúp
+                  </button>
+                  <button
+                    class="bg-slate-900/80 backdrop-blur border border-slate-600 text-slate-300 px-4 py-2 rounded-full text-sm font-bold shadow-lg hover:bg-slate-800"
+                  >
+                    <i class="fas fa-adjust mr-1"></i> Bộ lọc Ánh sáng
+                  </button>
+                  <button
+                    class="bg-slate-900/80 backdrop-blur border border-slate-600 text-slate-300 px-4 py-2 rounded-full text-sm font-bold shadow-lg hover:bg-slate-800"
+                  >
+                    <i class="fas fa-globe mr-1"></i> Kiểm tra Nguồn (Reverse
+                    Image Search)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Báo cáo kết quả -->
+            <div
+              class="bg-cyber-panel rounded-xl border border-slate-700 p-6 flex flex-col"
+            >
+              <h3
+                class="text-lg font-bold mb-4 flex items-center gap-2 border-b border-slate-700 pb-2"
+              >
+                <i class="fas fa-clipboard-check text-blue-400"></i> Báo cáo
+                Giám định
+              </h3>
+
+              <p class="text-sm text-slate-400 mb-4">
+                Nhiệm vụ: Sử dụng công cụ bên trái để khoanh vùng **2 chi tiết**
+                chứng minh bức ảnh này được tạo ra bởi Trí tuệ nhân tạo (AI).
+              </p>
+
+              <div class="space-y-3 flex-1">
+                <div
+                  class="bg-slate-900 border border-slate-700 rounded p-3 flex items-center justify-between"
+                >
+                  <span class="text-sm text-slate-300"
+                    >Lỗi sinh lý (Tay/Mắt)</span
+                  >
+                  <i class="fas fa-times-circle text-slate-600"></i>
+                  <!-- Chuyển thành check-circle text-green-500 khi hoàn thành -->
+                </div>
+                <div
+                  class="bg-slate-900 border border-slate-700 rounded p-3 flex items-center justify-between"
+                >
+                  <span class="text-sm text-slate-300"
+                    >Lỗi kết xuất văn bản (Text/Logo)</span
+                  >
+                  <i class="fas fa-times-circle text-slate-600"></i>
+                </div>
+              </div>
+
+              <div
+                class="bg-blue-900/20 border border-blue-500/30 p-4 rounded-lg mt-4"
+              >
+                <h4 class="text-blue-400 font-bold text-sm mb-2">
+                  <i class="fas fa-lightbulb mr-1"></i> Góc Cố Vấn (Dành cho Phụ
+                  Huynh)
+                </h4>
+                <p class="text-xs text-slate-300 text-justify">
+                  Dạy con tư duy "Nghi ngờ hợp lý": Đừng tin ngay vào những
+                  video/ảnh gây sốc trên mạng. AI hiện tại thường gặp lỗi khi vẽ
+                  bàn tay, tạo nếp nhăn không tự nhiên, hoặc phông nền bị méo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: BỘ SƯU TẬP (Placeholder) -->
+        <div id="tab-collection" class="tab-content">
+          <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-4">
+            Bộ Sưu Tập Thẻ Bài Số
+          </h2>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <!-- Card ảo -->
+            <div
+              class="bg-gradient-to-b from-blue-900 to-slate-900 rounded-xl border-2 border-blue-500/50 aspect-[2.5/3.5] relative overflow-hidden group hover:scale-105 transition-transform cursor-pointer"
+            >
+              <div
+                class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
+              ></div>
+              <div class="p-4 h-full flex flex-col justify-between">
+                <div class="flex justify-between items-start">
+                  <span
+                    class="bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded"
+                    >THẺ XANH</span
+                  >
+                  <i class="fas fa-star text-yellow-400"></i>
+                </div>
+                <div class="text-center mt-auto">
+                  <h3
+                    class="font-bold text-blue-100 uppercase tracking-wider mb-1"
+                  >
+                    Khiên Chắn Lọc Tin
+                  </h3>
+                  <p class="text-xs text-blue-300">Đã thu thập: 12/08/2026</p>
+                </div>
+              </div>
+            </div>
+            <!-- Card chưa mở -->
+            <div
+              class="bg-slate-900 rounded-xl border-2 border-dashed border-slate-700 aspect-[2.5/3.5] flex items-center justify-center opacity-50"
+            >
+              <i class="fas fa-lock text-3xl text-slate-600"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Hàm chuyển đổi các Tab và cập nhật Sidebar (Chỉ xử lý giao diện Frontend)
+      function switchTab(tabId) {
+        // 1. Ẩn tất cả các nội dung tab
+        document.querySelectorAll(".tab-content").forEach((el) => {
+          el.classList.remove("active");
+        });
+
+        // 2. Bỏ highlight tất cả các mục ở sidebar
+        document.querySelectorAll(".nav-item").forEach((el) => {
+          el.classList.remove("active", "text-blue-400", "text-red-400");
+          if (el.id === "nav-phishing" || el.id === "nav-ai-forensics") {
+            el.classList.add("text-slate-400");
+          } else {
+            el.classList.add("text-slate-400");
+          }
+        });
+
+        // 3. Hiển thị tab được chọn
+        document.getElementById("tab-" + tabId).classList.add("active");
+
+        // 4. Highlight mục đang chọn trên sidebar
+        const activeNav = document.getElementById("nav-" + tabId);
+        activeNav.classList.remove("text-slate-400");
+        activeNav.classList.add("active");
+
+        // Cập nhật màu sắc đặc thù cho các nhiệm vụ Cố vấn
+        if (tabId === "phishing" || tabId === "ai-forensics") {
+          activeNav.classList.add("text-red-400");
+        } else {
+          activeNav.classList.add("text-blue-400");
+        }
+
+        // 5. Cập nhật tiêu đề Header
+        const headerTitles = {
+          dashboard: "Dashboard (Trang chủ)",
+          scanner: "Quay về Không gian Thực (Quét QR)",
+          phishing: "Nhiệm vụ Cố Vấn: Lắp Ráp Kịch Bản",
+          "ai-forensics": "Nhiệm vụ Cố Vấn: Giám Định Pháp Y AI",
+          collection: "Bộ Sưu Tập Thẻ Bài",
+        };
+        document.getElementById("header-title").innerText = headerTitles[tabId];
+      }
+    </script>
+  </body>
+</html>
