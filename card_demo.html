@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CYBER AGENTS - Card Design Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cyber: {
+                purple: "#a855f7",
+                yellow: "#eab308",
+                dark: "#090d16",
+                cardBg: "#131a2c",
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&display=swap");
+      .font-tech {
+        font-family: "Share Tech Mono", monospace;
+      }
+      .font-cyber {
+        font-family: "Orbitron", sans-serif;
+      }
+      .neon-glow-yellow {
+        box-shadow: 0 0 15px rgba(234, 179, 8, 0.3);
+        border: 1px solid rgba(234, 179, 8, 0.5);
+      }
+      .neon-text-purple {
+        text-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+      }
+      .neon-text-yellow {
+        text-shadow: 0 0 8px rgba(234, 179, 8, 0.6);
+      }
+      .glitch-bg {
+        background: linear-gradient(
+          45deg,
+          #1e1b4b 25%,
+          #090d16 25%,
+          #090d16 50%,
+          #1e1b4b 50%,
+          #1e1b4b 75%,
+          #090d16 75%,
+          #090d16 100%
+        );
+        background-size: 40px 40px;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-cyber-dark min-h-screen flex flex-col items-center justify-center p-6 text-slate-200 font-sans"
+  >
+    <div class="text-center mb-8">
+      <span
+        class="text-xs font-bold tracking-widest text-cyber-yellow bg-cyber-yellow/10 px-3 py-1 rounded-full font-cyber uppercase"
+        >Bản vẽ thiết kế hệ thống</span
+      >
+      <h1
+        class="text-3xl font-black mt-2 tracking-wide font-cyber text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-yellow-400"
+      >
+        THẺ VÀNG: ĐẶC VỤ GLITCH CIPHER
+      </h1>
+      <p class="text-slate-400 text-sm mt-1">
+        Độ tuổi phù hợp: Cấp 2 (Lớp 6 - Lớp 9) | Thuộc tính: Giải mã & Thẩm định
+      </p>
+    </div>
+
+    <!-- KHU VỰC HIỂN THỊ CẶP THẺ BÀI -->
+    <div
+      class="flex flex-col md:flex-row gap-12 items-center justify-center max-w-5xl w-full"
+    >
+      <!-- ================= MẶT TRƯỚC THẺ (FRONT) ================= -->
+      <div
+        class="w-[320px] h-[450px] bg-cyber-cardBg rounded-2xl overflow-hidden relative flex flex-col p-4 neon-glow-yellow group transition-all duration-300 hover:scale-105"
+      >
+        <!-- Bản quyền góc thẻ -->
+        <div class="absolute top-2 right-4 text-[9px] font-tech text-slate-500">
+          © 2026 CYBER AGENTS
+        </div>
+
+        <!-- Header của thẻ -->
+        <div
+          class="flex justify-between items-center border-b border-purple-500/30 pb-2 mb-2"
+        >
+          <div class="flex items-center gap-1.5">
+            <i
+              class="fas fa-fingerprint text-cyber-yellow text-sm animate-pulse"
+            ></i>
+            <span
+              class="font-cyber font-bold text-sm tracking-wider text-slate-200"
+              >GLITCH CIPHER</span
+            >
+          </div>
+          <span
+            class="font-tech text-xs bg-purple-950/80 text-purple-400 px-2 py-0.5 rounded border border-purple-500/40"
+            >CA-084</span
+          >
+        </div>
+
+        <!-- Khung hình ảnh nhân vật (Artwork Area) -->
+        <div
+          class="w-full h-[220px] rounded-lg overflow-hidden relative border border-slate-700 bg-slate-900 flex flex-col items-center justify-center overflow-hidden"
+        >
+          <!-- Giả lập hình ảnh nhân vật bằng hiệu ứng nền Cyberpunk -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-purple-950/90 via-slate-900/40 to-transparent z-10"
+          ></div>
+          <div class="absolute inset-0 opacity-20 glitch-bg"></div>
+
+          <!-- Avatar minh họa tạm thời bằng Icon đại diện đặc vụ Techwear -->
+          <div class="z-20 text-center flex flex-col items-center">
+            <div class="relative">
+              <i
+                class="fas fa-user-ninja text-6xl text-purple-400 mb-2 neon-text-purple"
+              ></i>
+              <i
+                class="fas fa-bolt text-cyber-yellow absolute -top-1 -right-2 text-lg animate-bounce"
+              ></i>
+            </div>
+            <span
+              class="text-[10px] font-tech text-cyber-yellow tracking-widest bg-cyber-dark/80 px-2 py-0.5 rounded border border-cyber-yellow/30 uppercase"
+              >Đặc vụ bậc trung</span
+            >
+          </div>
+
+          <!-- Lớp hiển thị chỉ số HUD đè lên ảnh -->
+          <div class="absolute bottom-2 left-2 z-20 flex gap-2">
+            <div
+              class="bg-cyber-dark/90 backdrop-blur px-2 py-1 rounded border border-slate-700 flex items-center gap-1"
+            >
+              <span class="text-[9px] font-tech text-slate-400">INT</span>
+              <span class="text-[10px] font-cyber font-bold text-cyber-yellow"
+                >★★★★</span
+              >
+            </div>
+            <div
+              class="bg-cyber-dark/90 backdrop-blur px-2 py-1 rounded border border-slate-700 flex items-center gap-1"
+            >
+              <span class="text-[9px] font-tech text-slate-400">SEC</span>
+              <span class="text-[10px] font-cyber font-bold text-emerald-400"
+                >92%</span
+              >
+            </div>
+          </div>
+          <div
+            class="absolute bottom-2 right-2 z-20 bg-cyber-dark/90 backdrop-blur px-2 py-1 rounded border border-red-500/40"
+          >
+            <span class="text-[9px] font-tech text-red-400"
+              >PWR: <span class="font-cyber font-bold">2800</span></span
+            >
+          </div>
+        </div>
+
+        <!-- Khung kỹ năng & Cốt truyện (Lore/Skill Box) -->
+        <div
+          class="flex-1 mt-3 bg-slate-950/60 rounded-lg p-3 border border-purple-500/20 flex flex-col justify-between"
+        >
+          <div>
+            <div
+              class="flex items-center gap-1.5 text-xs font-cyber font-bold text-cyber-yellow mb-1"
+            >
+              <i class="fas fa-shield-cat"></i> KỸ NĂNG: THẨM ĐỊNH LÃO LÀNG
+            </div>
+            <p class="text-[11px] text-slate-300 leading-normal text-justify">
+              Kích hoạt kính lúp quét quang phổ mạng để bóc tách các vùng
+              ảnh/video bị bóp méo do AI tạo sinh (Deepfake). Khóa các nguồn tin
+              rác.
+            </p>
+          </div>
+
+          <!-- Lore ngắn tăng tính sưu tầm -->
+          <div class="border-t border-slate-800 pt-1.5 mt-2">
+            <p
+              class="text-[10px] text-purple-400 italic font-tech tracking-wide"
+            >
+              "Một lời đồn thất thiệt lan truyền với vận tốc ánh sáng, nhưng sự
+              thật sẽ kết thúc nó."
+            </p>
+          </div>
+        </div>
+
+        <!-- Nhãn phân loại cấp bậc dưới chân thẻ -->
+        <div
+          class="mt-2.5 flex justify-between items-center text-[10px] font-tech text-slate-400"
+        >
+          <span
+            >Rarity:
+            <span class="text-cyber-yellow font-bold"
+              >RARE (Thẻ Vàng)</span
+            ></span
+          >
+          <span class="text-purple-400"
+            ><i class="fas fa-circle text-[7px] mr-1 animate-pulse"></i>ONLINE
+            APP ACCESSIBLE</span
+          >
+        </div>
+      </div>
+
+      <!-- ================= MẶT SAU THẺ (BACK) ================= -->
+      <div
+        class="w-[320px] h-[450px] bg-cyber-cardBg rounded-2xl overflow-hidden relative flex flex-col p-6 neon-glow-yellow items-center justify-between group transition-all duration-300 hover:scale-105"
+      >
+        <!-- Họa tiết trang trí 4 góc mặt sau -->
+        <div class="absolute top-3 left-3 text-slate-700 font-tech text-[8px]">
+          SYS_ON
+        </div>
+        <div class="absolute top-3 right-3 text-slate-700 font-tech text-[8px]">
+          SEC_LEVEL_2
+        </div>
+        <div
+          class="absolute bottom-3 left-3 text-slate-700 font-tech text-[8px]"
+        >
+          NET_VER_20.26
+        </div>
+        <div
+          class="absolute bottom-3 right-3 text-slate-700 font-tech text-[8px]"
+        >
+          AUTH_REQUIRED
+        </div>
+
+        <!-- Vòng tròn ma trận trung tâm -->
+        <div class="w-full flex flex-col items-center mt-4">
+          <div
+            class="w-12 h-12 rounded-full border border-purple-500/30 flex items-center justify-center mb-2"
+          >
+            <div
+              class="w-8 h-8 rounded-full border border-cyber-yellow/40 flex items-center justify-center animate-spin"
+              style="animation-duration: 10s"
+            >
+              <i class="fas fa-crosshairs text-xs text-cyber-yellow"></i>
+            </div>
+          </div>
+          <h3
+            class="font-cyber font-bold text-xs tracking-widest text-purple-400 text-center uppercase"
+          >
+            Quét để kích hoạt nhiệm vụ
+          </h3>
+        </div>
+
+        <!-- CỔNG KẾT NỐI - MÃ QR (Được custom giả lập) -->
+        <div
+          class="w-44 h-44 bg-slate-950 rounded-xl p-3 border border-cyber-yellow/40 flex items-center justify-center relative shadow-[0_0_20px_rgba(234,179,8,0.15)]"
+        >
+          <!-- Giả lập cấu trúc mã QR bằng Grid mắt lưới -->
+          <div
+            class="w-full h-full border border-slate-800 rounded p-1 grid grid-cols-5 grid-rows-5 gap-1 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:8px_8px]"
+          >
+            <!-- Định vị 3 góc mã QR (Position Detection Patterns) -->
+            <div
+              class="border-4 border-cyber-yellow bg-slate-950 w-full h-full rounded-sm"
+            ></div>
+            <div class="bg-transparent"></div>
+            <div class="bg-transparent"></div>
+            <div class="bg-transparent"></div>
+            <div
+              class="border-4 border-cyber-yellow bg-slate-950 w-full h-full rounded-sm"
+            ></div>
+
+            <div class="bg-transparent"></div>
+            <div class="bg-cyber-yellow/30 rounded-sm"></div>
+            <div class="bg-transparent"></div>
+            <div class="bg-cyber-yellow/50 rounded-sm"></div>
+            <div class="bg-transparent"></div>
+
+            <!-- Logo dự án chèn chính giữa mã QR -->
+            <div class="bg-transparent"></div>
+            <div class="bg-transparent"></div>
+            <div
+              class="bg-purple-600 rounded flex items-center justify-center border border-purple-400 shadow-[0_0_8px_#a855f7]"
+            >
+              <i class="fas fa-user-secret text-[10px] text-white"></i>
+            </div>
+            <div class="bg-transparent"></div>
+            <div class="bg-transparent"></div>
+
+            <div class="bg-transparent"></div>
+            <div class="bg-cyber-yellow/40 rounded-sm"></div>
+            <div class="bg-transparent"></div>
+            <div class="bg-transparent"></div>
+            <div class="bg-transparent"></div>
+
+            <div
+              class="border-4 border-cyber-yellow bg-slate-950 w-full h-full rounded-sm"
+            ></div>
+            <div class="bg-transparent"></div>
+            <div class="bg-transparent"></div>
+            <div class="bg-cyber-yellow/60 rounded-sm"></div>
+            <div class="bg-cyber-yellow/80 rounded-sm"></div>
+          </div>
+        </div>
+
+        <!-- Dòng cảnh báo công nghệ dưới chân thẻ mặt sau -->
+        <div class="w-full text-center mb-2 px-2">
+          <p
+            class="font-tech text-[8px] text-slate-500 uppercase tracking-tight leading-tight"
+          >
+            [SYSTEM WARNING: SCAN TO UNLOCK ENCRYPTED MISSION. DATA DOCKING
+            REQUIRES ADVISOR OVERRIDE PASS]
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- KIẾN THỨC BỔ SUNG CHO ĐỘI NGŨ THIẾT KẾ -->
+    <div
+      class="mt-12 bg-slate-900/60 border border-slate-800 p-4 rounded-xl max-w-2xl text-xs text-slate-400 leading-relaxed"
+    >
+      <span class="font-bold text-slate-300 text-sm"
+        ><i class="fas fa-paint-brush mr-1.5 text-cyber-yellow"></i> Ý tưởng vẽ
+        tranh thực tế (Nếu dùng Midjourney/DALL-E):</span
+      >
+      <p class="mt-1">
+        Để tạo ra bức ảnh nhân vật chính xác đè vào phần Artwork mặt trước, nhóm
+        hãy copy đoạn prompt tiếng Anh này bỏ vào các AI tạo ảnh: <br />
+        <code
+          class="text-purple-400 block mt-2 bg-slate-950 p-2 rounded border border-slate-800 font-tech"
+          >"Cyberpunk Gen Z neon agent, techwear clothing with straps, purple
+          hair, smiling confidently, holding a glitching holographic interface
+          device, dynamic perspective, futuristic media literacy card asset game
+          style, 8k resolution, detailed cyberpunk city background --ar
+          4:3"</code
+        >
+      </p>
+    </div>
+  </body>
+</html>
